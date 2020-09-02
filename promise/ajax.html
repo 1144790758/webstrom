@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../jquery-3.5.1.js"></script>
+</head>
+<body>
+<script>
+    "use strict";//开启严格模式
+    function get(addr) {
+        let p = new Promise((resolve, reject) => {
+            // for (var time = Date.now(); Date.now()-time<2000; ) {
+            // }
+            $.ajax({
+                // url:'./test.json',
+                url: addr,
+                method: 'get',
+                success: (data) => {
+                    console.log(data.name);
+                    resolve(data)
+                },
+                error: (xhr) => {
+                    console.log(xhr.status);
+                    reject(xhr)
+                }
+            })
+        })
+        return p
+    }
+
+    $(function () {
+        get('./test.json').then(get('./test1.json')).then(get('./test2.json'))
+    })
+</script>
+</body>
+</html>

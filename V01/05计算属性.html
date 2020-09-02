@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h3>{{msg_reverse}}</h3>
+</div>
+</body>
+<script>
+    var v=new Vue({
+        el:'#app',
+        data:{
+            msg: 'javascript'
+        },
+        //声明计算属性将复杂的计算逻辑抽取出来,计算属性的使用也是使用{{}}来获取值的,
+        //其值任然是根据data中的值来计算的
+        //vue会将计算的值缓存起来,计算就只会执行一次
+        //注意computed是依赖于data的缓存的,data变化了缓存就会失效
+        //methods中与computed很像,methods调用了就会执行
+        computed:{
+          msg_reverse:function (){
+              //join()默认以逗号分隔,可以指定分隔符
+              return this.msg.split('').reverse().join('')
+          }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+<!--    注意当点击按钮时，每个组件都会各自独立维护它的 count。
+因为你每用一次组件，就会有一个它的新实例被创建。-->
+    <demo-button>123</demo-button>
+    <demo-button>123</demo-button>
+    <demo-button>123</demo-button>
+</div>
+</body>
+<script>
+    Vue.component('demo-button',{
+        //data 必须是一个函数
+        //一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝
+        data:function (){
+            return {
+                count:0,
+            }
+        },
+        template:'<button v-on:click="count++">点击了{{count}}次</button>'
+    })
+
+    var app=new Vue({
+        el:'#app-2',
+    })
+</script>
+</html>

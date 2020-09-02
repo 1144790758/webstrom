@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <script src="../jquery-3.5.1.js"></script>
+</head>
+<body>
+
+<div id="app-2">
+    用户名:<input type="text" v-model="uname">{{msg}}
+<!--    下面是懒加载的方式-->
+<!--    用户名:<input type="text" v-model.lazy="uname">{{msg}}-->
+</div>
+</body>
+<script>
+// 特别注意在setTimeout中的块中的this不是当前vue实例而是window对象
+//要使用vue实例的话需要在外面把它存起来
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            uname:'',
+            msg:'请输入用户名'
+        },
+        //来个侦听器,监测某个data的值变化
+        watch:{
+            //函数名必须和监听的对象保持一致,val是改变后的值
+            uname:function (val){
+                this.checkName(val)
+                this.msg="正在验证"
+            }
+        },
+        methods:{
+            checkName(val){
+                //异步地请求接口验证用户名是否可用
+                this.getData('./uname.json','get').then(data=>{
+                    console.log(data)
+                    console.log(this.uname)
+                    if (data[this.uname]){
+                        this.msg="用户名不可用"
+                    }else {
+                        this.msg="用户名可用"
+                    }
+                })
+            },
+            //普通地封装ajax
+            getData(url,method){
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url:url,
+                        method:method,
+                        success:(data)=>{
+                            resolve(data)
+                        },
+                        error:(xhr,errorStatus)=>{
+                            console.log(errorStatus)
+                            reject(xhr)
+                        }
+                    })
+                })
+            }
+        }
+    })
+</script>
+</html>

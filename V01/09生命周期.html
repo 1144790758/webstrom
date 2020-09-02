@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <span v-bind:title="message">aaa
+  </span>
+</div>
+</body>
+<script>
+    //vue的生命周期,最重要的就是mounted,此周期开始意味着
+    //页面模板已经构建完毕,需要调用接口来查询数据
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: '页面加载于 ' + new Date().toLocaleString()
+        }
+    })
+</script>
+</html>

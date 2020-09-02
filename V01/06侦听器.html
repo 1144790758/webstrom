@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="app-2">
+    <input type="text" @input="handle">
+    <br>
+    {{msg}}
+</div>
+</body>
+<script>
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            msg:''
+        },
+        //来个侦听器,监测某个data的值变化
+        watch:{
+            //函数名必须和监听的对象保持一致,val是改变后的值
+            msg:function (val){
+                console.log(val)
+            }
+        },
+        methods:{
+            handle:function (event){
+                // console.log(event.target.value);
+                this.msg=event.target.value
+            }
+        }
+    })
+</script>
+</html>
