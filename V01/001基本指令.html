@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--v-text 避免了闪动问题    -->
+<div v-text="message"></div>
+<!--v-bind 单向绑定,数据源绑向html-->
+<h5 v-bind:title="crateTime">消息</h5>
+<h5 v-text="num"></h5>
+<!--v-html 绑定的数据会被解析为html  -->
+<!--v-model 双向绑定html与数据源都会保持一致-->
+    <input type="text" v-model="msg">
+<!--v-once 此标签只会被vue编译一次    -->
+
+<!-- @ ,v-on   绑定事件-->
+<!--    事件绑定可以传入函数,函数可以不写括号,默认传入事件对象,
+也可以写括号显示的传入参数,注意的是事件对象 必须用 $修饰切放在最后面 m(arg,$event)-->
+    <button @click="m" style="width: 3em;height: 3em">btn</button>
+    <br>
+<!--函数的修饰符,阻止冒泡-->
+<div @click="handle2">
+<!--    click.stop 阻止冒泡,click.prevent阻止默认行为比如跳转
+有两种方法上面是一种,还有一种在函数中用event.stopPropagation()阻止冒泡(原生js方法)
+event.preventDefault()阻止默认行(原生js方法)
+-->
+    <button @click.stop="handle1">btn1</button>
+</div>
+</div>
+</body>
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+            message:'hello',
+            crateTime:Date(),
+            msg:'如火如荼',
+            num:10,
+        },
+        methods:{
+            m(){
+                //this就是true
+                alert(this===vue)//true
+            },
+            handle1(event){
+                this.num++
+                console.log((`${event} ${this.num}`));
+            },
+            handle2(event){
+                this.num++
+                console.log((`${event} ${this.num}`));
+            },
+        }
+    });
+</script>
+</html>

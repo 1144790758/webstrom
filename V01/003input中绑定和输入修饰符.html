@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{age}}<br>
+    {{school}}
+<!--   .trim 修饰符用于取出value中首尾空格的-->
+    <input type="text" v-model.trim="uname">
+<!--    在以前如果是要做数值计算得用parseInt现在用 .number 来修饰就行了-->
+    <input type="text" v-model.number="age">
+<!--    默认是将表单只要输入了就会触发input时间,加上 .lazy 修饰后失去焦点才会触发input事件-->
+    <input type="text" v-model.lazy="school">
+    <button @click="handle">增加2</button>
+    <br><br><br><br><br><br><br><br>
+<!--    测试input的单选复选多选框框-->
+<!--    单选按钮v-model绑定的是值,当绑定的值等于value的值就会被选中-->
+   A <input type="radio" name="r1" value="1" v-model="r1">
+   B <input type="radio" name="r1" value="2" v-model="r1"><br>
+<!--复选用的是数组-->
+   1 <input type="checkbox" name="c1" value="1" v-model="c1">
+    2<input type="checkbox" name="c1" value="2" v-model="c1">
+   3 <input type="checkbox" name="c1" value="3" v-model="c1">
+    4<input type="checkbox" name="c1" value="4" v-model="c1">
+
+    <br><br><br><br>
+<!--    下拉框用的也是单个的值,若是下拉框复选也是用数组-->
+    <select v-model="s1">
+        <option value="q">q</option>
+        <option value="w">w</option>
+        <option value="e">e</option>
+        <option value="r">r</option>
+        <option value="d</">d</option>
+    </select><br><br>
+
+    <select v-model="s2" multiple>
+        <option value="q2">q2</option>
+        <option value="w2">w2</option>
+        <option value="e2">e2</option>
+        <option value="r2">r2</option>
+        <option value="d2</">d2</option>
+    </select>
+     <input type="submit"  value="提交" @click="handle2">
+</div>
+</body>
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+            uname:'lhl',
+            age:13,
+            school:'',
+            r1:2,
+            //让2和4值的CheckBox被选中
+            c1:['2','4'],
+            //让e 和 d 的值被选中
+            s1:'e',
+            s2:['e2','w2']
+
+        },
+        methods:{
+            handle(){
+                this.age=this.age+2
+            },
+            handle2(){
+                console.log(this.r1)
+            }
+        }
+    });
+</script>
+</html>

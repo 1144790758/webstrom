@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+<!--    我要实现按下回车提交,按下tab下一个输入框,按下删除键删除整个输入框-->
+<!--    @keyup.enter  ===  v-on:keyup.enter-->
+<!--    拓展v-on:keyup.数字 表示绑定这个keyCode绑定事件-->
+    <input type="text" v-model="uname" @keyup.delete="clear()" @keyup.tab="nextI">
+    <input type="password" v-model="pwd" @keyup.enter="commit">
+</div>
+</body>
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+            uname:'',
+            pwd:'',
+        },
+        methods:{
+            commit(){
+                alert(`${this.uname}@${this.pwd}`)
+            },
+            clear(){
+                this.uname=''
+            },
+            nextI(){
+                document.getElementsByTagName("input")[1].focus()
+            }
+        }
+    });
+</script>
+</html>

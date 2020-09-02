@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二刺螈计算器</title>
+    <style>
+        body{
+            font-size: 95px;
+        }
+        div {
+            margin: 0 auto;
+            height: 2262px;
+            width: 1600px;
+            background: rgba(0, 0, 0, 0.1) url("../../ 基础/回炉重造/qqzone/QQ图片20200818204011.jpg") no-repeat;
+            border: #f1a899 solid;
+            /*设置背景图片透明*/
+            opacity: 0.75;;
+        }
+        table{
+            height: 1000px;
+            width: 800px;
+            margin: auto;
+        }
+        input{
+            height: 96px;
+            width: 913px;
+        }
+        button{
+            font-size: 95px;
+        }
+    </style>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <table>
+        <tr>
+            <td>
+                数值A:&nbsp<input type="text" v-model="a">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                数值B:&nbsp<input type="text" v-model='b' @keyup.enter="calculate"> <br>
+            </td>
+        </tr>
+        <td>
+            <button @click="calculate">计算</button>
+        </td>
+        <tr>
+            <td>
+                <h2 v-text="result"></h2>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            a: '',
+            b: '',
+            result: '',
+        },
+        methods: {
+            calculate() {
+                    this.result=parseFloat(this.a)+parseFloat(this.b)
+            },
+        }
+    });
+</script>
+</html>

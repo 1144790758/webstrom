@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+        .box{
+            border: 1px solid red;
+        }
+        .box1{
+            font-size: 150px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    v-if=为true就渲染元素,v-show=false 就控制样式是否显示display=none开销可能大-->
+
+    <div :class="{box:isActive,box1:isActive}">盒子</div>
+</div>
+</body>
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+            isActive:true,
+        },
+        methods:{
+
+        }
+    });
+</script>
+</html>

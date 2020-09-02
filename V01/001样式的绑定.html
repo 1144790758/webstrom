@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+        .box{
+            border: 1px solid red;
+        }
+        .box1{
+            font-size: 150px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!-- 对象写法 : 我们控制样式的时候用v-bind绑定class属性,
+值填插值表达式{}对象,键值是样式类名,值为布尔值,有多个类名就写多个键值对就行了-->
+    <div :class="{box:isActive,box1:isActive}">盒子</div>
+</div>
+</body>
+<script>
+    var vue=new Vue({
+        el:'#app',
+        data:{
+            isActive:true,
+        },
+        methods:{
+
+        }
+    });
+</script>
+</html>

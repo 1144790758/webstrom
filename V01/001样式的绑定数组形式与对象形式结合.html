@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <style>
+        .box {
+            border: 1px solid red;
+        }
+
+        .box1 {
+            font-size: 150px;
+        }
+
+        .box3 {
+            background: royalblue;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 数组写法 : 我们控制样式的时候用v-bind绑定class属性,然后值写个数组就行了,
+    数组里面的值是要在data中能获取到的类名
+    -->
+    <div :class="['box','box1']">盒子1</div>
+    <div :class="classes">盒子2</div>
+    <!--    这里面直接就是对象了-->
+    <div :style="{backgroundColor:'yellow',border: '1px solid red'}">style对象盒子</div>
+    <!--    这里面是数组包一个对象-->
+    <div :style="[styles1,styles2]">style数组盒子</div>
+</div>
+</body>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            //可以就用这个数组来控制样式,然后原来有的会拼接上
+            classes: ['box1', 'box2', 'box3'],
+            styles1: {border: '1px solid red'},
+            styles2: {backgroundColor: 'green'},
+        },
+        methods: {}
+    });
+</script>
+</html>
