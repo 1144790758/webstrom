@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+    <!-- 用单向绑定可以传递原始对象的类型   -->
+    <my-component num="13" :age="age"></my-component>
+    <!--props传递数据时,只允许单向的传递数据,不然的话控制逻辑将会比较复杂,vue会警告-->
+    <!--    捕获subEvent事件并对其处理-->
+    <my-books books="books" :style="{'font-size':size+'px'}" v-on:sub-event="increaseFontSize($event)"></my-books>
+</div>
+</body>
+<script>
+    Vue.component('my-component', {
+        //props是一个数组里面是外面组件的属性值
+        //props属性命名有规则的,在js中写驼峰式没问题,但是在html中需要加横岗
+        props: ['num', 'age'],
+        data: function () {
+            return {
+                count: 0,
+            }
+        },
+        template: `
+            <div>{{num}}---  {{age}}</div>
+        `
+    })
+
+    Vue.component('my-books', {
+        //props是一个数组里面是外面组件的属性值
+        //props属性命名有规则的,在js中写驼峰式没问题,但是在html中需要加横岗
+        props: ['books',],
+        data: function () {
+            return {
+                count: 0,
+            }
+        },
+        //vue子组件数据流向是单向的,子组件不建议修改props中的值,建议通过事件的触发来修改
+        //$emit('subEvent')表示点击时触发subEvent事件该事件是我们自定义的,在子模板外面再捕获该事件做对应处理
+        //还可以传递参数,第二参数个就是传递的参数
+        template: `
+            <div>
+                <ul>
+                    <li :key="index" v-for="(book,index) in books">book.name</li>
+                </ul>
+                <button @click="$emit('sub-event')">增大字体</button>
+                <button @click="$emit('sub-event',10)">增大字体10px</button>
+            </div>
+        `,
+    })
+
+    var app = new Vue({
+        el: '#app-2',
+        data: {
+            age: 15,
+            size: 20,
+            books: [{'name': 'java', 'num': 1, 'time': new Date(1599023660910)},
+                {'name': 'python', 'num': 2, 'time': new Date(1599023660910)},
+                {'name': 'C', 'num': 3, 'time': new Date(1599023660910)},
+                {'name': 'JavaScript', 'num': 4, 'time': new Date(1599023660910)},
+                {'name': 'Go', 'num': 5, 'time': new Date(1599023660910)}]
+        },
+        methods:{
+            increaseFontSize:function (event) {
+                console.log(event)
+                if (!event){
+                    //如果传了参数那么event将是参数
+                    this.size+=5
+                }else {
+                    this.size+=10
+                }
+            }
+        }
+    })
+</script>
+</html>

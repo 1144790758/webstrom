@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+    <fruits-box>
+        <template slot-scope="props">
+            <strong v-if="props.item==='orange'">{{"当前水果是" + props.item}}</strong>
+            <span v-else>{{props.item}}</span>
+        </template>
+    </fruits-box>
+</div>
+</body>
+<script>
+
+    //作用域插槽,可以通过template标签中slot-scope获取模板插槽中的值
+    Vue.component('fruits-box', {
+        props: [],
+        data: function () {
+            return {
+                fruits: ['banana', 'orange', 'apple', 'tomato', 'pear']
+            }
+        },
+        //注意绑定了一个属性item,他是自定义的用于将数据流向html中
+        //注意slot里面加v-bind传递到template
+        template: `
+            <div>
+                <li :key="index" v-for="(item,index) in fruits">
+                    <slot v-bind:item="item"></slot>
+                </li>
+            </div>
+
+        `,
+    })
+
+
+    var app = new Vue({
+        el: '#app-2',
+        data: {},
+        methods: {}
+    })
+</script>
+</html>

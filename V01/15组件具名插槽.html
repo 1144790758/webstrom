@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+<!--    用法1-->
+    <msg-box>
+        <h1 slot="s1">1</h1>
+        <h1 slot="s2">2</h1>
+        <h1 slot="s3">3</h1>
+    </msg-box>
+<!--    用法二,使用template标签包裹一对有具名的模板-->
+    <msg-box>
+        <template slot="s1">
+            <p>我是你爹</p>
+            <p>我是你爸爸</p>
+        </template>
+        <template slot="s2">
+            <p>我是你2爹</p>
+            <p>我是你2爸爸</p>
+        </template>
+        <template slot="s3">
+            <p>我是你3爹</p>
+            <p>我是你3爸爸</p>
+        </template>
+    </msg-box>
+</div>
+<script>
+
+    //具名插槽就是指定要替换slot标签的slot属性,该属性等于模板中的slot中的值就替换
+    Vue.component('msg-box', {
+        template: `
+            <div>
+                <slot name="s3"></slot>
+                <slot name="s2"></slot>
+                <slot name="s1"></slot>
+            </div>
+
+        `,
+    })
+
+
+    var app = new Vue({
+        el: '#app-2',
+        data: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>

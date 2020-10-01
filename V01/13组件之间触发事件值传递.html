@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+    <c-1 :num="1"></c-1>
+    <c-2 :num="2"></c-2>
+
+    <button @click="my_destroy">销毁事件</button>
+</div>
+</body>
+<script>
+    //hab用于监听c-1和c-2组件的事件,作为事件中心
+    var hab = new Vue()
+
+    Vue.component('c-1', {
+        props: ['num'],
+        data: function () {
+            return {
+            }
+        },
+        template: `
+            <div>
+                <div>{{num}}</div>
+                <button @click="handle(1)">点击</button>
+            </div>
+
+        `,
+        methods:{
+            handle:function (val) {
+                //不能在html中直接写这个代码不然会报错hab找不到
+                hab.$emit('inc_c2',val)
+            }
+        },
+        mounted:function () {
+            //val是事件inc_c1触发时候拿到的值
+            hab.$on('inc_c1',(val)=>{
+                console.log(this)
+                this.num+=val
+            })
+        }
+    })
+
+    Vue.component('c-2', {
+        props: ['num'],
+        data: function () {
+            return {
+            }
+        },
+        template: `
+            <div>
+                <div>{{num}}</div>
+                <button @click="handle(2)">点击</button>
+            </div>
+
+        `,
+        methods:{
+            handle:function (val) {
+                hab.$emit('inc_c1',val)
+            }
+        },
+        mounted: function () {
+            //通过hab监听某个事件是否发生,就执行某个函数
+            hab.$on('inc_c2', (val) => {
+                console.log(this)
+                this.num+=val
+            })
+
+        }
+    })
+
+
+    var app = new Vue({
+        el: '#app-2',
+        data: {},
+        methods: {
+            my_destroy:function () {
+                //传了回调函数销毁失效不知道为什么
+                hab.$off('inc_c1')
+                hab.$off('inc_c2')
+            }
+        }
+    })
+</script>
+</html>

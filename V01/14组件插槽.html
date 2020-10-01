@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+<alter-box>有bug</alter-box>
+</div>
+</body>
+<script>
+
+    //组件插槽,slot就是槽子,普通文本可以直接在html中插入
+    //<slot>默认内容</slot>,html中写了值可以覆盖slot中的默认内容
+    Vue.component('alter-box', {
+        props: [],
+        data: function () {
+            return {
+            }
+        },
+        template: `
+            <div>
+                <strong>ERROR:</strong>
+                <slot>默认内容</slot>
+            </div>
+
+        `,
+    })
+
+
+    var app = new Vue({
+        el: '#app-2',
+        data: {},
+        methods: {
+        }
+    })
+</script>
+</html>

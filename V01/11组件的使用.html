@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./vue.js"></script>
+    <style>
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-2" class="center">
+    <!--    注意当点击按钮时，每个组件都会各自独立维护它的 count。
+    因为你每用一次组件，就会有一个它的新实例被创建。-->
+    <demo-button>123</demo-button>
+    <demo-button>123</demo-button>
+    <demo-button>123</demo-button>
+
+<!--    局部的组件-->
+    <ca></ca>
+    <cb></cb>
+</div>
+</body>
+<script>
+    //定义组件的格式 Vue.component(组件名,{data:组件数据(必须函数),template:组件模板内容})
+    //注意组件的名称使用驼峰式命名之后只能在字符串模板中使用,不能在html中使用,要使用的话就要在中间加短横线
+    Vue.component('demo-button', {
+        //data 必须是一个函数
+        //一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝
+        data: function () {
+            return {
+                count: 0,
+            }
+        },
+        //组件内容要包含在一个根元素中,不然会发出警告
+        //还可以使用字符串模板  str =` xxxx ` (es6)
+        template: '<div><button v-on:click="handle">点击了{{count}}次</button> <h1>123</h1></div>',
+        //组建中还可以定义函数
+        methods: {
+            handle: function () {
+                this.count++
+            }
+        }
+    })
+
+    var componetA = {
+        data: function () {
+            return {
+                text: 'hello world'
+            }
+        },
+        template: `
+            <div>
+                <h2>{{text}}</h2>
+            </div>`
+    }
+    var componetB = {
+        data: function () {
+            return {
+                text: 'hello world2'
+            }
+        },
+        template: `
+            <div>
+                <h2>{{text}}</h2>
+            </div>`
+    }
+    var app = new Vue({
+        el: '#app-2',
+        components: {
+            //定义局部组件,局部只能在局部使用,不能被全局的作用域检测到
+           'ca':componetA,
+           'cb':componetB,
+        }
+    })
+</script>
+</html>
